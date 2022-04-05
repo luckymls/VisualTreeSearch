@@ -9,3 +9,6 @@ Progetto bellissimo dove andremo a fare un progetto fighissimo di intelligenza a
 
 
 ![image](https://user-images.githubusercontent.com/58305440/161790475-17e3f49a-ce1f-406a-823d-1ec5a836da82.png)
+
+
+![image](https://user-images.githubusercontent.com/58305440/161790579-e27ba6aa-7807-42c1-89f1-ff5507581b5a.png)
