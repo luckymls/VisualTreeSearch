@@ -3,3 +3,6 @@ Progetto bellissimo dove andremo a fare un progetto fighissimo di intelligenza a
 
 
 ![image](https://user-images.githubusercontent.com/58305440/161789711-2f4fdb9b-e956-4942-ad98-7870f85506c3.png)
+
+
+![image](https://user-images.githubusercontent.com/58305440/161790230-32050b5d-38fc-455e-8ab3-73d2bb1c7b5c.png)
