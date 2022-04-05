@@ -1,5 +1,4 @@
 from node import Node
-from problem import Problem
 
 
 def tree_search(problem, strategy):
@@ -21,7 +20,7 @@ def tree_search(problem, strategy):
             return None
 
         # based on the chosen strategy this chooses the node to expand
-        current_node = strategy(fringe, goal_test)
+        current_node = strategy(fringe)
 
         if goal_test == current_node:
             # solution found

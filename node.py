@@ -16,6 +16,8 @@ class Node:
 
         #TODO capire come rappresentare il campo "action"
 
+        if children is None:
+            children = []
         self.state = state
         self.parent = parent
         self.children = children
@@ -38,7 +40,7 @@ class Node:
         return path
 
     def expand(self, problem):
-        for (action, result) in problem.successor_function(self):
+        for (result, action) in problem.successor_function(self):
             new_node = Node(state=result,
                             parent=self,
                             action=action,
