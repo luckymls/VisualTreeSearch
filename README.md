@@ -15,3 +15,6 @@ Progetto bellissimo dove andremo a fare un progetto fighissimo di intelligenza a
 
 
 ![image](https://user-images.githubusercontent.com/58305440/161791000-b19941ea-3327-408e-a93a-e2af7a169707.png)
+
+
+![image](https://user-images.githubusercontent.com/58305440/161791048-bc363a69-fa54-42c7-93d9-d8904cd0e191.png)
