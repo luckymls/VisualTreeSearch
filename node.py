@@ -37,8 +37,17 @@ class Node:
 
         return path
 
-    def expand(self, fringe):
-        #TODO da fare LOLOL
-        pass
+    def expand(self, problem):
+        for (action, result) in problem.successor_function(self):
+            new_node = Node(state=result,
+                            parent=self,
+                            action=action,
+                            path_cost=(self.path_cost + problem.step_cost),
+                            depth=(self.depth+1))
+
+            self.children.append(new_node)
+            return self.children
+
+
 
 

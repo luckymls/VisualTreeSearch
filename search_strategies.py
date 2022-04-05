@@ -20,13 +20,16 @@ def tree_search(problem, strategy):
             # no solution has been found
             return None
 
+        # based on the chosen strategy this chooses the node to expand
         current_node = strategy(fringe, goal_test)
 
         if goal_test == current_node:
             # solution found
             return current_node.correct_path()
 
-        current_node.expand(fringe)
+        fringe.remove(current_node)
+        for new_node in current_node.expand(problem):
+            fringe.append(new_node)
 
 
 def A_star():
