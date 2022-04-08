@@ -1,29 +1,37 @@
 class Frame:
 
 
-    def __init__(self, n_row, n_col, data):
+    def __init__(self, data):
         '''
         Create data frame structure for graph representation
-        :param n_row: number of row
-        :param n_col: number of col
         :param data: array with data i.e. [[1,2,3],[4,5,6],[7,8,0]]      -> 1 2 3
                                                                             4 5 6
                                                                             7 8                                                                        
         '''
 
-        self.n_row = n_row
-        self.n_col = n_col
         self.data = data
+        self.l_row = len(self.data)
+        self.l_col = len(self.data[0])
 
     
     def format_frame(self):
+        """
+        Create frame readable from graphviz for data graph representation
+        [[1,2,3],[4,5,6],[7,8,0]] becomes {1|4|7}|{2|5|8}|{3|6| }
+        becomes
+        1 2 3
+        4 5 6
+        7 8  
+
+        """
         frame=""
-        for row in self.data:
+        for i in range(self.l_col):
             frame += "{" # Column frame begins
-            for value in row:
+            for k in range(self.l_row):
+                value = self.data[k][i]
                 if value == 0:
                     value = " " # Blank cell
-                frame += value # Cell data
+                frame += str(value) # Cell data
                 frame += "|" # Cell separator
 
             frame = frame.rstrip("|")
@@ -32,6 +40,7 @@ class Frame:
         frame = frame.rstrip("|") 
         return frame
 
+    
             
 
 
