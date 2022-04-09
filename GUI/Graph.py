@@ -8,8 +8,7 @@ class Graph:
         Create data frame structure for graph representation
         :param graph_name
         """
-        self.graph = graphviz.Digraph(graph_name)
-    
+        self.graph = graphviz.Digraph(graph_name, node_attr={'shape': 'record'})
 
     def node_struct(self, data, l_row, l_col):
         """
