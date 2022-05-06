@@ -87,16 +87,16 @@ class Problem:
         new_node = copy.deepcopy(node)
 
         if blank_tile_position != 2 and blank_tile_position != 5 and blank_tile_position != 8:
-            new_node[blank_tile_position + 1] = 0
-            new_node[blank_tile_position] = node[blank_tile_position + 1]
+            new_node[blank_tile_position + 1] = 0 # TODO Ho cambiato da +1 a -1
+            new_node[blank_tile_position] = node[blank_tile_position + 1] 
             return new_node
 
     def moveLeft(self, node, blank_tile_position):
         new_node = copy.deepcopy(node)
 
         if blank_tile_position != 0 and blank_tile_position != 3 and blank_tile_position != 6:
-            new_node[blank_tile_position + 1] = 0
-            new_node[blank_tile_position] = node[blank_tile_position + 1]
+            new_node[blank_tile_position - 1] = 0 
+            new_node[blank_tile_position] = node[blank_tile_position -1]
             return new_node
 
     def print_puzzle(self, node):
