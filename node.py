@@ -49,7 +49,15 @@ class Node:
                             depth=(self.depth+1))
 
             self.children.append(new_node)
-            return self.children
+        return self.children
+
+
+def print_path(path):
+        for node in reversed(path):
+            print(node.action)
+            print("|")
+            print("V")
+            print(node.state)
 
 
 

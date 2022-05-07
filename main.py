@@ -1,11 +1,13 @@
+import node
 from node import Node
 from problem import Problem
 from search_strategies import tree_search, BFS
 from utils import is_solvable
 
 if __name__ == '__main__':
-    initial_state = [0, 3, 4, 1, 2, 6, 7, 5, 8]
+    initial_state = [1, 2, 0, 4, 5, 6, 7, 3, 8]
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+
     if is_solvable(initial_state):
         print("Test stato iniziale ")
         print(initial_state)
@@ -17,6 +19,6 @@ if __name__ == '__main__':
         if result is None:
             print('rip')
         else:
-            print(result)
+            node.print_path(result)
     else:
         print("Not solvable problem, try with different one")

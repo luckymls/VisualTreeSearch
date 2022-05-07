@@ -44,6 +44,7 @@ class Problem:
             else:
                 if down[0] != node.parent.state:
                     successors.append(down)
+
         if left[0] is not None:
             if node.parent is None:
                 successors.append(left)

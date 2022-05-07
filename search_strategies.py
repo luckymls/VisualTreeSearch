@@ -13,8 +13,15 @@ def tree_search(problem, strategy):
     fringe = [Node(problem.initial_state, path_cost=1, depth=0)]
 
     goal_test = Node(problem.goal_test)
+    print("GOAL STATE: ")
+    print(goal_test.state)
 
     while True:
+        print("FRINGE: ")
+        for n in fringe:
+            print(n.state)
+        print("FRINGE LENGTH: " + str(len(fringe)))
+
         if len(fringe) == 0:
             # no solution has been found
             return None
@@ -22,7 +29,8 @@ def tree_search(problem, strategy):
         # based on the chosen strategy this chooses the node to expand
         current_node = strategy(fringe)
 
-        if goal_test == current_node:
+        if goal_test.state == current_node.state:
+            print("Solution found!")
             # solution found
             return current_node.correct_path()
 
