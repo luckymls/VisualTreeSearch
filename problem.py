@@ -22,9 +22,6 @@ class Problem:
 
     def successor_function_8_puzzle(self, node):
         tile_pos = self.find_blank_tile(node)
-
-        print('tile 0 in pos ' + str(tile_pos))
-
         successors = []
 
         up = (self.moveUp(node.state, tile_pos), 'up')
@@ -36,26 +33,27 @@ class Problem:
             if node.parent is None:
                 successors.append(up)
             else:
-                if up[0] != node.parent.state:
+                if not (up[0] in node.correct_path()):
                     successors.append(up)
+
         if down[0] is not None:
             if node.parent is None:
                 successors.append(down)
             else:
-                if down[0] != node.parent.state:
+                if not (down[0] in node.correct_path()):
                     successors.append(down)
 
         if left[0] is not None:
             if node.parent is None:
                 successors.append(left)
             else:
-                if left[0] != node.parent.state:
+                if not (left[0] in node.correct_path()):
                     successors.append(left)
         if right[0] is not None:
             if node.parent is None:
                 successors.append(right)
             else:
-                if right[0] != node.parent.state:
+                if not (right[0] in node.correct_path()):
                     successors.append(right)
 
         for nodes in successors:

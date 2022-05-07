@@ -17,17 +17,12 @@ def tree_search(problem, strategy):
     print(goal_test.state)
 
     while True:
-        print("FRINGE: ")
-        for n in fringe:
-            print(n.state)
-        print("FRINGE LENGTH: " + str(len(fringe)))
-
         if len(fringe) == 0:
             # no solution has been found
             return None
 
         # based on the chosen strategy this chooses the node to expand
-        current_node = strategy(fringe)
+        current_node = strategy(fringe, problem)
 
         if goal_test.state == current_node.state:
             print("Solution found!")
@@ -43,7 +38,7 @@ def A_star():
     pass
 
 
-def BFS(fringe):
+def BFS(fringe, problem):
     """
     Strategy that choses the shollowest node in the fringe for the expansion
     The function cycles through the fringe to check which node is the one with
@@ -64,5 +59,29 @@ def BFS_bidirectional():
     pass
 
 
-def IDS():
-    pass
+def DFS(fringe):
+    return fringe.pop()
+
+
+def IDS(fringe, problem):
+    root = fringe[0]
+    depth_limit = 1
+    iterator = 0
+
+    while depth_limit < 100:
+        while len(fringe) != 0:
+            current_node = DFS(fringe)
+
+            if current_node.state == problem.goal_test:
+                return current_node
+
+            if current_node.depth != depth_limit:
+                for new_node in current_node.expand(problem):
+                    fringe.append(new_node)
+
+                iterator += 1
+
+        depth_limit *= 2
+        fringe.append(root)
+
+    return None

@@ -14,9 +14,6 @@ class Node:
         :param depth: the number of actions ion the path from the root to this node
         """
 
-        #TODO capire come rappresentare il campo "action" 
-        #TODO usare interi da 0 a 3 per azioni UP DOWN LEFT RIGHT (?)
-        
         if children is None:
             children = []
         self.state = state
