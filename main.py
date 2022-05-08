@@ -1,11 +1,11 @@
 import node
 from node import Node
 from problem import Problem
-from search_strategies import tree_search, BFS, IDS
+from search_strategies import tree_search, BFS, IDS, BFS_bidirectional
 from utils import is_solvable
 
 if __name__ == '__main__':
-    initial_state = [1, 2, 3, 4, 5, 0, 7, 8, 6]
+    initial_state = [1, 3, 0, 4, 5, 7, 2, 8, 6]
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 
     if is_solvable(initial_state):
@@ -14,8 +14,9 @@ if __name__ == '__main__':
         print("Puzzle is solvable")
         problem = Problem('8tile', initial_state, goal_state, 1)
 
-        #result = tree_search(problem, BFS)
-        result = tree_search(problem, IDS)
+        result = tree_search(problem, BFS)
+        #result = tree_search(problem, IDS)
+        #result = tree_search(problem, BFS_bidirectional)
 
         if result is None:
             print('rip')

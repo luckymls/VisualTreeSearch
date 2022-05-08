@@ -55,8 +55,34 @@ def BFS(fringe, problem):
     return min_depth
 
 
-def BFS_bidirectional():
-    pass
+def BFS_bidirectional(fringe, problem):
+    fringe2 = [Node(problem.goal_test, path_cost=1, depth=0)]
+
+    while True:
+        if len(fringe) == 0:
+            return None
+
+        current_node1 = BFS(fringe, problem)
+        current_node2 = BFS(fringe2, problem)
+
+        for node in fringe2:
+            if current_node1.state == node.state:
+                for parent in node.correct_path():
+                    if parent != node:
+                        if len(current_node1.children) == 0:
+                            parent.parent = current_node1
+                        else:
+                            parent.parent = current_node1.children[-1]
+                        current_node1.children.append(parent)
+                return current_node1.children[-1]
+
+        fringe.remove(current_node1)
+        for new_node in current_node1.expand(problem):
+            fringe.append(new_node)
+
+        fringe2.remove(current_node2)
+        for new_node in current_node2.expand(problem):
+            fringe2.append(new_node)
 
 
 def DFS(fringe):
