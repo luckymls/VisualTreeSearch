@@ -6,7 +6,7 @@ class Problem:
     Data structure identifying the given problem
     """
 
-    def __init__(self, name, initial_state, goal_test, step_cost):
+    def __init__(self, name, initial_state, goal_test, step_cost, graph):
         """
         Function to initialize the problem
         :param initial_state: initial state of the problem (can be randomized)
@@ -19,8 +19,10 @@ class Problem:
         self.goal_test = goal_test
         self.successor_function = self.successor_function_8_puzzle
         self.step_cost = step_cost
+        self.graph = graph
+        self.graph_iter = 0
 
-    def successor_function_8_puzzle(self, node):
+    def successor_function_8_puzzle(self, node, verbose=True):
         tile_pos = self.find_blank_tile(node)
         successors = []
         path_to_root = [node.state for node in node.correct_path()]
@@ -57,11 +59,10 @@ class Problem:
                 if not (right[0] in path_to_root):
                     successors.append(right)
 
-        #print("BEGIN")
-        #self.print_puzzle(node.state)
-        #for nodes in successors:
-        #    self.print_puzzle(nodes[0])
-        #print("OOOOOOOOOOOOOOOOOOOO")
+
+        for nodes in successors:
+            if verbose:
+                self.print_puzzle(nodes[0])
 
         return successors
 
@@ -108,3 +109,9 @@ class Problem:
         print(node[:3])
         print(node[3:6])
         print(node[6:9])
+        
+        self.graph.add_node(str(self.graph_iter), node)
+        if self.graph_iter > 0:
+            
+            self.graph.add_edge(str(self.graph_iter-1), str(self.graph_iter))
+        self.graph_iter+=1
