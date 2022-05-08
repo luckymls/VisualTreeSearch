@@ -1,3 +1,4 @@
+from time import monotonic
 import graphviz
 
 class Graph:
@@ -37,6 +38,18 @@ class Graph:
         frame = frame.rstrip("|") 
         return frame
 
+    def mono2multi_array(self, data):
+        multi = []
+        numbers_per_game_row = int(len(data)**0.5) # Radice della lunghezza del vettore per capire numero di colonne e righe (il gioco deve essere un quadrato)
+
+        for i in range(numbers_per_game_row):
+            start = numbers_per_game_row*i
+            end = numbers_per_game_row*(i+1)
+            multi.append(data[start:end])
+        return multi
+
+
+
     def add_node(self, name, data):
         """
         This function allow user to add a node to the graph
@@ -45,6 +58,7 @@ class Graph:
                                                                      4 5 6
                                                                      7 8 
         """
+        data = self.mono2multi_array(data)
         l_row = len(data)
         l_col = len(data[0])
         node_struct = self.node_struct(data, l_row, l_col)

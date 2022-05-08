@@ -31,3 +31,7 @@ def is_solvable(data):
                 n_inversion+=1
 
     return n_inversion % 2 == 0
+
+
+def get_strategy_name(strategy):
+    return strategy.__qualname__
