@@ -1,12 +1,13 @@
 import node
 from node import Node
 from problem import Problem
-from search_strategies import tree_search, BFS, IDS
-from utils import is_solvable, get_strategy_name
 from GUI.Graph import Graph
+from utils import is_solvable, get_strategy_name
+from search_strategies import tree_search, BFS, IDS, BFS_bidirectional
+
 
 if __name__ == '__main__':
-    initial_state = [0, 1, 3, 4, 2, 5, 7, 8, 6]
+    initial_state = [1, 3, 0, 4, 5, 7, 2, 8, 6]
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     
     
@@ -18,8 +19,12 @@ if __name__ == '__main__':
         step_graph = Graph("%s step graph" % get_strategy_name(IDS))
 
         problem = Problem('8tile', initial_state, goal_state, 1, step_graph)
-        #result = tree_search(problem, BFS)
-        result = tree_search(problem, IDS)
+        result = tree_search(problem, BFS)
+        #result = tree_search(problem, IDS)
+        #result = tree_search(problem, BFS_bidirectional)
+
+
+
 
         if result is None:
             print('rip')
