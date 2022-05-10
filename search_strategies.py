@@ -1,5 +1,5 @@
 from node import Node
-
+from utils import search, get_dict_instance_given_path
 
 def tree_search(problem, strategy):
     """
@@ -10,7 +10,8 @@ def tree_search(problem, strategy):
     :return: None if failure, correct path if success
     """
 
-    fringe = [Node(problem.initial_state, path_cost=1, depth=0)]
+    fringe = [Node(problem.initial_state, path_cost=1, depth=0)] # Initialize the fringe
+    complete_tree = {Node(problem.initial_state, path_cost=1, depth=0): {}}
 
     goal_test = Node(problem.goal_test)
     print("GOAL STATE: ")
@@ -23,14 +24,20 @@ def tree_search(problem, strategy):
 
         # based on the chosen strategy this chooses the node to expand
         current_node = strategy(fringe, problem)
-
+        
         if goal_test.state == current_node.state:
             print("Solution found!")
             # solution found
+            print((complete_tree))
             return current_node.correct_path()
 
         fringe.remove(current_node)
+
         for new_node in current_node.expand(problem):
+            path_to_key = search(complete_tree, current_node)
+            dict[path_to_key]
+            path_dict_instance = get_dict_instance_given_path(complete_tree, path_to_key)
+            path_dict_instance.update = {new_node: {}}
             fringe.append(new_node)
 
 
