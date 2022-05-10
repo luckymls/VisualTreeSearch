@@ -19,9 +19,9 @@ if __name__ == '__main__':
         step_graph = Graph("%s step graph" % get_strategy_name(IDS))
 
         problem = Problem('8tile', initial_state, goal_state, 1, step_graph)
-        result = tree_search(problem, BFS)
+        #result = tree_search(problem, BFS)
         #result = tree_search(problem, IDS)
-        #result = tree_search(problem, BFS_bidirectional)
+        result = tree_search(problem, BFS_bidirectional)
 
 
 

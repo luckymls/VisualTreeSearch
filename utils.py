@@ -32,6 +32,58 @@ def is_solvable(data):
 
     return n_inversion % 2 == 0
 
-
+'''
+Given a strategy function it returns the function name
+'''
 def get_strategy_name(strategy):
     return strategy.__qualname__
+
+
+'''
+Given a multidimensional python dictionary and a key, it returns the path to the key
+'''
+def search(d, k, path=None):
+    if path is None:
+        path = []
+    
+
+    if not isinstance(d, dict): # No keys found
+        return False
+    
+
+    if k in d.keys(): # Keys found
+        path.append(k)
+        return path
+    
+    else:
+        check = list(d.keys())
+        while check:
+            first = check[0]
+            path.append(first)
+
+            if search(d[first], k, path) is not False:
+                break
+            else:
+                check.pop(0)
+                path.pop(-1)
+        else:
+            return False
+        return path
+
+'''
+This function returns the instance of the dictionary given a path
+dict = {1: {2: {3: {4: 5}}}}
+path = [1,2,3]
+return dict[1][2][3]
+'''
+def get_dict_instance_given_path_old(dictionary, path):
+    temp = dictionary
+    for key in path:
+
+        dictionary = dictionary.get(key)
+    return dictionary
+
+def get_dict_instance_given_path(data, keys):
+
+    return get_dict_instance_given_path(data[keys[0]], keys[1:]) \
+        if keys else data
