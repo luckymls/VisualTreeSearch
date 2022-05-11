@@ -1,5 +1,6 @@
 from node import Node
 from utils import search, get_dict_instance_given_path
+from GUI.Graph import Graph
 
 def tree_search(problem, strategy):
     """
@@ -10,9 +11,10 @@ def tree_search(problem, strategy):
     :return: None if failure, correct path if success
     """
 
-    fringe = [Node(problem.initial_state, path_cost=1, depth=0)] # Initialize the fringe
-    complete_tree = {Node(problem.initial_state, path_cost=1, depth=0): {}}
-
+    fringe = [Node(problem.initial_state, path_cost=1, depth=0, graph_index=0)] # Initialize the fringe
+    to_visit = [fringe[0]]
+    visited = [fringe[0]]
+    complete_graph = Graph("Total Graph")
     goal_test = Node(problem.goal_test)
     print("GOAL STATE: ")
     print(goal_test.state)
@@ -28,16 +30,40 @@ def tree_search(problem, strategy):
         if goal_test.state == current_node.state:
             print("Solution found!")
             # solution found
-            print((complete_tree))
+            
+            indice = 0
+            complete_graph.add_node(str(visited[0].graph_index), visited[0].state)
+            
+            while len(to_visit) > 0:
+                for node in to_visit:
+                    parent_index = node.graph_index
+                    for child in node.children:
+                        to_visit.append(child)
+                        visited.append(child)
+                        indice+=1
+                        child.graph_index = indice
+                        complete_graph.add_node(str(child.graph_index), child.state)
+                        complete_graph.add_edge(str(parent_index), str(child.graph_index), child.action)
+                    to_visit.remove(node)
+            complete_graph.graph_viewer()
+            print(visited)
+            print("End solution")
             return current_node.correct_path()
 
         fringe.remove(current_node)
 
         for new_node in current_node.expand(problem):
-            path_to_key = search(complete_tree, current_node)
-            dict[path_to_key]
-            path_dict_instance = get_dict_instance_given_path(complete_tree, path_to_key)
-            path_dict_instance.update = {new_node: {}}
+            print("Ci passa")
+            #path_to_key = search(complete_tree, current_node)
+            #print(path_to_key)
+            #to_eval = "complete_tree"
+            #for k in path_to_key:
+            #    to_eval+="['"+str(k)+"']"
+            #to_eval+=".update({new_node.state: {}})"
+            #eval(to_eval) # Update dictionary
+            
+            
+            
             fringe.append(new_node)
 
 

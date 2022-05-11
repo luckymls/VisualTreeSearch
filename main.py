@@ -22,9 +22,8 @@ if __name__ == '__main__':
         #result = tree_search(problem, BFS)
         #result = tree_search(problem, IDS)
         result = tree_search(problem, BFS_bidirectional)
-
-
-
+        
+        
 
         if result is None:
             print('rip')

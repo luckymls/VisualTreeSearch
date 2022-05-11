@@ -3,7 +3,7 @@ class Node:
     Class that defines the nodes of the three and its methods
     """
 
-    def __init__(self, state, parent=None, children=None, action=None, path_cost=None, depth=None, verbose=True):
+    def __init__(self, state, parent=None, children=None, action=None, path_cost=None, depth=None, verbose=True, graph_index=None):
         """
         Initializes the node of the tree
         :param state: problem-dependent representation of the corresponding state
@@ -12,6 +12,7 @@ class Node:
         :param action: [???] description of the action that lead from the parent node to this one
         :param path_cost: the total cost of the actions on the path from the root to this node
         :param depth: the number of actions ion the path from the root to this node
+        :param graph_index: the index of the node in the complete graph
         """
 
         if children is None:
@@ -23,6 +24,7 @@ class Node:
         self.path_cost = path_cost
         self.depth = depth
         self.verbose = verbose
+        self.graph_index = graph_index
 
     def correct_path(self):
         """
