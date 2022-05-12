@@ -1,3 +1,4 @@
+
 class Node:
     """
     Class that defines the nodes of the three and its methods
@@ -25,6 +26,7 @@ class Node:
         self.depth = depth
         self.verbose = verbose
         self.graph_index = graph_index
+        
 
     def correct_path(self):
         """
@@ -53,11 +55,11 @@ class Node:
 
 
 def print_path(path):
-        for node in reversed(path):
-            print(node.action)
-            print("|")
-            print("V")
-            print(node.state)
+    for node in reversed(path):
+        print(node.action)
+        print("|")
+        print("V")
+        print(node.state)
 
 
 

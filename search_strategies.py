@@ -14,25 +14,22 @@ def tree_search(problem, strategy):
     fringe = [Node(problem.initial_state, path_cost=1, depth=0, graph_index=0)] # Initialize the fringe
     to_visit = [fringe[0]]
     visited = [fringe[0]]
-    complete_graph = Graph("Total Graph")
+    complete_graph = Graph("Graph")
     goal_test = Node(problem.goal_test)
-    print("GOAL STATE: ")
-    print(goal_test.state)
 
     while True:
-        if len(fringe) == 0:
-            # no solution has been found
+        if len(fringe) == 0: # no solution
             return None
 
         # based on the chosen strategy this chooses the node to expand
         current_node = strategy(fringe, problem)
         
-        if goal_test.state == current_node.state:
+        if current_node.state == goal_test.state: # Solution found
             print("Solution found!")
-            # solution found
+            result = current_node.correct_path() # Solution
             
             indice = 0
-            complete_graph.add_node(str(visited[0].graph_index), visited[0].state)
+            complete_graph.add_node(str(visited[0].graph_index), visited[0].state, color="green")
             
             while len(to_visit) > 0:
                 for node in to_visit:
@@ -42,28 +39,24 @@ def tree_search(problem, strategy):
                         visited.append(child)
                         indice+=1
                         child.graph_index = indice
-                        complete_graph.add_node(str(child.graph_index), child.state)
-                        complete_graph.add_edge(str(parent_index), str(child.graph_index), child.action)
+                        node_color="black" 
+                        if child in result:
+                            node_color="green"
+                            if child.state == goal_test.state:
+                                node_color="red"
+
+                        
+                        
+                        complete_graph.add_node(str(child.graph_index), child.state, color=node_color)
+                        complete_graph.add_edge(str(parent_index), str(child.graph_index), child.action, color=node_color)
                     to_visit.remove(node)
             complete_graph.graph_viewer()
-            print(visited)
-            print("End solution")
-            return current_node.correct_path()
+
+            return result
+
 
         fringe.remove(current_node)
-
-        for new_node in current_node.expand(problem):
-            print("Ci passa")
-            #path_to_key = search(complete_tree, current_node)
-            #print(path_to_key)
-            #to_eval = "complete_tree"
-            #for k in path_to_key:
-            #    to_eval+="['"+str(k)+"']"
-            #to_eval+=".update({new_node.state: {}})"
-            #eval(to_eval) # Update dictionary
-            
-            
-            
+        for new_node in current_node.expand(problem): 
             fringe.append(new_node)
 
 
@@ -118,8 +111,9 @@ def BFS_bidirectional(fringe, problem):
             fringe2.append(new_node)
 
 
-def DFS(fringe):
+def DFS(fringe, problem=None):
     return fringe.pop()
+    return fringe[-1] # TODO Prima c'era fringe.pop(), facendo così veniva restituito l'ultimo elemento della fringe MA veniva anche rimosso (può creare problemi?)
 
 
 def IDS(fringe, problem):
