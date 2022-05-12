@@ -30,7 +30,9 @@ if __name__ == '__main__':
         if choice == 2:
             result = tree_search(problem, BFS_bidirectional)
         if choice == 3:
-            result = tree_search(problem, DFS)
+            print("Da implementare.")
+            result=None
+            #result = tree_search(problem, DFS)
 
 
 
@@ -40,6 +42,7 @@ if __name__ == '__main__':
             # Temporaneo
             index=0
             for node in reversed(result):
+                
                 if node.state != None:
                     result_graph.add_node(str(index), node.state)
                     if index > 0:

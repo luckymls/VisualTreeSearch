@@ -1,5 +1,4 @@
 from node import Node
-from utils import search, get_dict_instance_given_path
 from GUI.Graph import Graph
 
 def tree_search(problem, strategy):
@@ -12,9 +11,13 @@ def tree_search(problem, strategy):
     """
 
     fringe = [Node(problem.initial_state, path_cost=1, depth=0, graph_index=0)] # Initialize the fringe
-    to_visit = [fringe[0]]
-    visited = [fringe[0]]
+    
+    # --- PARTE GRAFICA ---
+    indice = 0
+    node_color="black" # test
     complete_graph = Graph("Graph")
+    # --- FINE GRAFICA ---
+    
     goal_test = Node(problem.goal_test)
 
     while True:
@@ -28,10 +31,19 @@ def tree_search(problem, strategy):
             print("Solution found!")
             result = current_node.correct_path() # Solution
             
-            indice = 0
-            complete_graph.add_node(str(visited[0].graph_index), visited[0].state, color="green")
+            # --- PARTE GRAFICA ---
+            for node in result:
+                node_index = node.graph_index
+                result_node_color="green"
+                if node.state == goal_test.state:
+                    result_node_color="red"
+                complete_graph.add_node(str(node_index), node.state, color=result_node_color)
             
-            while len(to_visit) > 0:
+            complete_graph.graph_viewer()
+            # --- FINE GRAFICA ---
+
+            ''' # LASCIARE
+                while len(to_visit) > 0:
                 for node in to_visit:
                     parent_index = node.graph_index
                     for child in node.children:
@@ -50,15 +62,26 @@ def tree_search(problem, strategy):
                         complete_graph.add_node(str(child.graph_index), child.state, color=node_color)
                         complete_graph.add_edge(str(parent_index), str(child.graph_index), child.action, color=node_color)
                     to_visit.remove(node)
-            complete_graph.graph_viewer()
+            complete_graph.graph_viewer()'''
 
             return result
-
-
+        
         fringe.remove(current_node)
-        for new_node in current_node.expand(problem): 
+        
+        # --- PARTE GRAFICA ---
+        parent_index = current_node.graph_index # test
+        complete_graph.add_node(str(parent_index), current_node.state, color=node_color) #test
+        # --- FINE GRAFICA ---
+
+        for new_node in current_node.expand(problem):
             fringe.append(new_node)
 
+            # --- PARTE GRAFICA ---
+            indice+=1 #test
+            new_node.graph_index = indice #test
+            complete_graph.add_node(str(new_node.graph_index), new_node.state, color=node_color) #test
+            complete_graph.add_edge(str(parent_index), str(new_node.graph_index), new_node.action, color=node_color)#test
+            # --- FINE GRAFICA ---
 
 def A_star():
     pass
@@ -113,7 +136,7 @@ def BFS_bidirectional(fringe, problem):
 
 def DFS(fringe, problem=None):
     return fringe.pop()
-    return fringe[-1] # TODO Prima c'era fringe.pop(), facendo così veniva restituito l'ultimo elemento della fringe MA veniva anche rimosso (può creare problemi?)
+    return fringe[0] # TODO Prima c'era fringe.pop(), facendo così veniva restituito l'ultimo elemento della fringe e non il primo (pia vecchio)
 
 
 def IDS(fringe, problem):
@@ -124,7 +147,7 @@ def IDS(fringe, problem):
     while depth_limit < 100:
         while len(fringe) != 0:
             current_node = DFS(fringe)
-
+            # fringe.remove(current_node) # test 
             if current_node.state == problem.goal_test:
                 return current_node
 

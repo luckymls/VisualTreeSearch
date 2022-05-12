@@ -69,21 +69,3 @@ def search(d, k, path=None):
         else:
             return False
         return path
-
-'''
-This function returns the instance of the dictionary given a path
-dict = {1: {2: {3: {4: 5}}}}
-path = [1,2,3]
-return dict[1][2][3]
-'''
-def get_dict_instance_given_path_old(dictionary, path):
-    temp = dictionary
-    for key in path:
-
-        dictionary = dictionary.get(key)
-    return dictionary
-
-def get_dict_instance_given_path(data, keys):
-
-    return get_dict_instance_given_path(data[keys[0]], keys[1:]) \
-        if keys else data
