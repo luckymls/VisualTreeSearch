@@ -1,5 +1,6 @@
 from node import Node
-
+from GUI.Graph import Graph
+from utils import get_complete_tree, assign_graph_index, remove_duplicates
 
 def tree_search(problem, strategy):
     """
@@ -10,26 +11,53 @@ def tree_search(problem, strategy):
     :return: None if failure, correct path if success
     """
 
-    fringe = [Node(problem.initial_state, path_cost=1, depth=0)]
+    fringe = [Node(problem.initial_state, path_cost=1, depth=0, graph_index=0)] # Initialize the fringe
+    
 
+    new_graph_test = Graph("Total")
+    # --- FINE GRAFICA ---
+    
     goal_test = Node(problem.goal_test)
-    print("GOAL STATE: ")
-    print(goal_test.state)
-
     while True:
-        if len(fringe) == 0:
-            # no solution has been found
+        if len(fringe) == 0: # no solution
             return None
 
         # based on the chosen strategy this chooses the node to expand
         current_node = strategy(fringe, problem)
-
-        if goal_test.state == current_node.state:
+        
+        if current_node.state == goal_test.state: # Solution found
             print("Solution found!")
-            # solution found
-            return current_node.correct_path()
+            result = current_node.correct_path() # Solution
 
+            total_tree = get_complete_tree(current_node)
+            #remove_duplicates(total_tree)
+            assign_graph_index(total_tree)
+
+            for node in total_tree:
+
+                parent = node.parent
+                node_index = node.graph_index
+
+
+                node_color = "black"
+                if node in result:
+                    node_color="green"
+                    if node.state == goal_test.state:
+                        node_color="red"
+
+                new_graph_test.add_node(str(node_index), node.state, color=node_color) 
+
+                if parent:
+                    parent_index = parent.graph_index
+                    new_graph_test.add_edge(str(parent_index), str(node_index), node.action, color=node_color)
+
+            new_graph_test.graph_viewer()
+
+
+            return result
+        
         fringe.remove(current_node)
+
         for new_node in current_node.expand(problem):
             fringe.append(new_node)
 
@@ -85,8 +113,9 @@ def BFS_bidirectional(fringe, problem):
             fringe2.append(new_node)
 
 
-def DFS(fringe):
+def DFS(fringe, problem=None):
     return fringe.pop()
+    return fringe[0] # TODO Prima c'era fringe.pop(), facendo così veniva restituito l'ultimo elemento della fringe e non il primo (pia vecchio)
 
 
 def IDS(fringe, problem):
@@ -94,11 +123,13 @@ def IDS(fringe, problem):
     depth_limit = 1
     iterator = 0
 
+
     while depth_limit < 100:
         while len(fringe) != 0:
             current_node = DFS(fringe)
-
+            # fringe.remove(current_node) # test 
             if current_node.state == problem.goal_test:
+                
                 return current_node
 
             if current_node.depth != depth_limit:

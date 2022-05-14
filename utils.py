@@ -1,5 +1,6 @@
 import copy
 
+
 def is_solvable(data):
     """
     param data: 8 puzzle as vector: [1,2,3,4,5,6,7,8,0]
@@ -32,6 +33,85 @@ def is_solvable(data):
 
     return n_inversion % 2 == 0
 
-
+'''
+Given a strategy function it returns the function name
+'''
 def get_strategy_name(strategy):
     return strategy.__qualname__
+
+
+'''
+Given a multidimensional python dictionary and a key, it returns the path to the key
+'''
+def search(d, k, path=None):
+    if path is None:
+        path = []
+    
+
+    if not isinstance(d, dict): # No keys found
+        return False
+    
+
+    if k in d.keys(): # Keys found
+        path.append(k)
+        return path
+    
+    else:
+        check = list(d.keys())
+        while check:
+            first = check[0]
+            path.append(first)
+
+            if search(d[first], k, path) is not False:
+                break
+            else:
+                check.pop(0)
+                path.pop(-1)
+        else:
+            return False
+        return path
+
+
+
+'''
+Return all children of a node
+'''
+def get_children(node):
+    temp = []
+    for child in node.children:
+        temp.append(child)
+        temp += get_children(child)
+    return temp
+
+'''
+Given a node, returns all the linked nodes
+'''
+def get_complete_tree(solution_node):
+    result = []
+    start_node = solution_node.correct_path()[-1]
+    result.append(start_node)
+    result += get_children(start_node)
+    
+    return result
+
+'''
+Assign index to each node to later print that
+'''
+def assign_graph_index(complete_tree):
+
+    index = 0
+    for node in complete_tree:
+        node.graph_index = index
+        index += 1
+
+'''
+Remove duplicate from tree
+'''
+def remove_duplicates(complete_tree):
+    
+    pass
+    
+            
+            
+            
+        

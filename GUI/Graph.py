@@ -50,7 +50,7 @@ class Graph:
 
 
 
-    def add_node(self, name, data):
+    def add_node(self, name, data, color=None):
         """
         This function allow user to add a node to the graph
         name: node name identifier
@@ -62,17 +62,17 @@ class Graph:
         l_row = len(data)
         l_col = len(data[0])
         node_struct = self.node_struct(data, l_row, l_col)
-        self.graph.node(name, node_struct)
+        self.graph.node(name, node_struct, color=color)
 
 
-    def add_edge(self, from_node, to_node, label=None):
+    def add_edge(self, from_node, to_node, label=None, color=None):
         """
         This function allow user to add an edge between two nodes
         from_node: starting node name identifier
         to_node: goal node name identifier
         label: [OPTIONAL] edge name
         """
-        self.graph.edge(from_node, to_node, label)
+        self.graph.edge(from_node, to_node, label, color=color)
     
 
 
