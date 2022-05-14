@@ -1,5 +1,6 @@
 import copy
 
+
 def is_solvable(data):
     """
     param data: 8 puzzle as vector: [1,2,3,4,5,6,7,8,0]
@@ -69,3 +70,48 @@ def search(d, k, path=None):
         else:
             return False
         return path
+
+
+
+'''
+Return all children of a node
+'''
+def get_children(node):
+    temp = []
+    for child in node.children:
+        temp.append(child)
+        temp += get_children(child)
+    return temp
+
+'''
+Given a node, returns all the linked nodes
+'''
+def get_complete_tree(solution_node):
+    result = []
+    start_node = solution_node.correct_path()[-1]
+    result.append(start_node)
+    result += get_children(start_node)
+    
+    return result
+
+'''
+Assign index to each node to later print that
+'''
+def assign_graph_index(complete_tree):
+
+    index = 0
+    for node in complete_tree:
+        node.graph_index = index
+        index += 1
+
+'''
+Remove duplicate from tree
+'''
+def remove_duplicates(complete_tree):
+    
+    pass
+    
+            
+            
+            
+        

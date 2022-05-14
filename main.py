@@ -39,7 +39,8 @@ if __name__ == '__main__':
         if not result:
             print("No solution found")
         else:
-            # Temporaneo
+
+            # Temporaneo, crea il pdf del vettore dei risultati
             index=0
             for node in reversed(result):
                 

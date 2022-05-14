@@ -1,5 +1,6 @@
 from node import Node
 from GUI.Graph import Graph
+from utils import get_complete_tree, assign_graph_index, remove_duplicates
 
 def tree_search(problem, strategy):
     """
@@ -12,14 +13,11 @@ def tree_search(problem, strategy):
 
     fringe = [Node(problem.initial_state, path_cost=1, depth=0, graph_index=0)] # Initialize the fringe
     
-    # --- PARTE GRAFICA ---
-    indice = 0
-    node_color="black" # test
-    complete_graph = Graph("Graph")
+
+    new_graph_test = Graph("Total")
     # --- FINE GRAFICA ---
     
     goal_test = Node(problem.goal_test)
-
     while True:
         if len(fringe) == 0: # no solution
             return None
@@ -30,58 +28,39 @@ def tree_search(problem, strategy):
         if current_node.state == goal_test.state: # Solution found
             print("Solution found!")
             result = current_node.correct_path() # Solution
-            
-            # --- PARTE GRAFICA ---
-            for node in result:
+
+            total_tree = get_complete_tree(current_node)
+            #remove_duplicates(total_tree)
+            assign_graph_index(total_tree)
+
+            for node in total_tree:
+
+                parent = node.parent
                 node_index = node.graph_index
-                result_node_color="green"
-                if node.state == goal_test.state:
-                    result_node_color="red"
-                complete_graph.add_node(str(node_index), node.state, color=result_node_color)
-            
-            complete_graph.graph_viewer()
-            # --- FINE GRAFICA ---
 
-            ''' # LASCIARE
-                while len(to_visit) > 0:
-                for node in to_visit:
-                    parent_index = node.graph_index
-                    for child in node.children:
-                        to_visit.append(child)
-                        visited.append(child)
-                        indice+=1
-                        child.graph_index = indice
-                        node_color="black" 
-                        if child in result:
-                            node_color="green"
-                            if child.state == goal_test.state:
-                                node_color="red"
 
-                        
-                        
-                        complete_graph.add_node(str(child.graph_index), child.state, color=node_color)
-                        complete_graph.add_edge(str(parent_index), str(child.graph_index), child.action, color=node_color)
-                    to_visit.remove(node)
-            complete_graph.graph_viewer()'''
+                node_color = "black"
+                if node in result:
+                    node_color="green"
+                    if node.state == goal_test.state:
+                        node_color="red"
+
+                new_graph_test.add_node(str(node_index), node.state, color=node_color) 
+
+                if parent:
+                    parent_index = parent.graph_index
+                    new_graph_test.add_edge(str(parent_index), str(node_index), node.action, color=node_color)
+
+            new_graph_test.graph_viewer()
+
 
             return result
         
         fringe.remove(current_node)
-        
-        # --- PARTE GRAFICA ---
-        parent_index = current_node.graph_index # test
-        complete_graph.add_node(str(parent_index), current_node.state, color=node_color) #test
-        # --- FINE GRAFICA ---
 
         for new_node in current_node.expand(problem):
             fringe.append(new_node)
 
-            # --- PARTE GRAFICA ---
-            indice+=1 #test
-            new_node.graph_index = indice #test
-            complete_graph.add_node(str(new_node.graph_index), new_node.state, color=node_color) #test
-            complete_graph.add_edge(str(parent_index), str(new_node.graph_index), new_node.action, color=node_color)#test
-            # --- FINE GRAFICA ---
 
 def A_star():
     pass
@@ -144,11 +123,13 @@ def IDS(fringe, problem):
     depth_limit = 1
     iterator = 0
 
+
     while depth_limit < 100:
         while len(fringe) != 0:
             current_node = DFS(fringe)
             # fringe.remove(current_node) # test 
             if current_node.state == problem.goal_test:
+                
                 return current_node
 
             if current_node.depth != depth_limit:
