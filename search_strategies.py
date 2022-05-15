@@ -93,16 +93,16 @@ def BFS_bidirectional(fringe, problem):
         current_node1 = BFS(fringe, problem)
         current_node2 = BFS(fringe2, problem)
 
-        for node in fringe2:
-            if current_node1.state == node.state:
-                for parent in node.correct_path():
-                    if parent != node:
-                        if len(current_node1.children) == 0:
-                            parent.parent = current_node1
-                        else:
-                            parent.parent = current_node1.children[-1]
-                        current_node1.children.append(parent)
-                return current_node1.children[-1]
+        for node1 in fringe:
+            for node2 in fringe2:
+                if node1.state == node2.state:
+                    curr_node = node1
+                    for parent in node2.correct_path()[1:]:
+                        curr_node.children.append(parent)
+                        parent.parent = curr_node
+                        curr_node = parent
+
+                    return curr_node
 
         fringe.remove(current_node1)
         for new_node in current_node1.expand(problem):
@@ -115,14 +115,12 @@ def BFS_bidirectional(fringe, problem):
 
 def DFS(fringe, problem=None):
     return fringe.pop()
-    return fringe[0] # TODO Prima c'era fringe.pop(), facendo così veniva restituito l'ultimo elemento della fringe e non il primo (pia vecchio)
 
 
 def IDS(fringe, problem):
     root = fringe[0]
     depth_limit = 1
     iterator = 0
-
 
     while depth_limit < 100:
         while len(fringe) != 0:

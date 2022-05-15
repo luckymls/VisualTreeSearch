@@ -111,7 +111,3 @@ def remove_duplicates(complete_tree):
     
     pass
     
-            
-            
-            
-        

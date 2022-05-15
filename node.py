@@ -26,7 +26,6 @@ class Node:
         self.depth = depth
         self.verbose = verbose
         self.graph_index = graph_index
-        
 
     def correct_path(self):
         """

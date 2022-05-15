@@ -34,8 +34,6 @@ if __name__ == '__main__':
             result=None
             #result = tree_search(problem, DFS)
 
-
-
         if not result:
             print("No solution found")
         else:
