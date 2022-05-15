@@ -1,6 +1,7 @@
 import copy
 
 
+
 def is_solvable(data):
     """
     param data: 8 puzzle as vector: [1,2,3,4,5,6,7,8,0]
@@ -105,9 +106,41 @@ def assign_graph_index(complete_tree):
         index += 1
 
 '''
+Assign node action to each node
+'''
+def assign_node_action(complete_tree):
+    
+    
+    for node in complete_tree:
+        parent = node.parent
+        if parent != None:
+            start_blank_pos = find_blank_tile_v2(parent)
+            end_blank_pos = find_blank_tile_v2(node)
+            diff_pos = end_blank_pos-start_blank_pos
+            node.action = get_action_label(diff_pos)
+        else:
+            node.action = None
+        
+'''
 Remove duplicate from tree
 '''
 def remove_duplicates(complete_tree):
     
     pass
 
+def find_blank_tile_v2(node):
+    index=0
+    for i in node.state:
+        if i == 0:
+            return index
+        index+=1
+        
+def get_action_label(diff_pos):
+    if diff_pos == -1:
+        return "left"
+    if diff_pos == 1:
+        return "right"
+    if diff_pos == -3:
+        return "up"
+    if diff_pos == 3:
+        return "down"

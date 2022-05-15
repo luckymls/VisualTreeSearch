@@ -1,6 +1,6 @@
 from node import Node
 from GUI.Graph import Graph
-from utils import get_complete_tree, assign_graph_index, remove_duplicates
+from utils import get_complete_tree, assign_graph_index, assign_node_action
 
 def tree_search(problem, strategy):
     """
@@ -32,7 +32,7 @@ def tree_search(problem, strategy):
             total_tree = get_complete_tree(current_node)
             #remove_duplicates(total_tree)
             assign_graph_index(total_tree)
-
+            assign_node_action(total_tree)
             for node in total_tree:
 
                 parent = node.parent
@@ -83,6 +83,17 @@ def BFS(fringe, problem):
     return min_depth
 
 
+def BFS_bidirectional_test(fringe, problem):
+    fringe2 = [Node(problem.goal_state, path_cost=1, depth=0)]
+
+    while True:
+        if len(fringe) == 0:
+            return None
+
+            
+    
+
+
 def BFS_bidirectional(fringe, problem):
     fringe2 = [Node(problem.goal_test, path_cost=1, depth=0)]
 
@@ -96,6 +107,7 @@ def BFS_bidirectional(fringe, problem):
                     curr_node = node1
                     for parent in node2.correct_path()[1:]:
                         parent.children = []
+                        parent.action = curr_node.action
                         curr_node.children.append(parent)
                         parent.parent = curr_node
                         curr_node = parent
