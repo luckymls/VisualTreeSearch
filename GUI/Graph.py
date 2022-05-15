@@ -5,7 +5,6 @@ os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 class Graph:
 
-
     def __init__(self, graph_name):
         """
         Create data frame structure for graph representation

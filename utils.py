@@ -1,5 +1,5 @@
-import copy
-
+import copy, random
+from tracemalloc import start
 
 
 def is_solvable(data):
@@ -33,46 +33,6 @@ def is_solvable(data):
                 n_inversion+=1
 
     return n_inversion % 2 == 0
-
-'''
-Given a strategy function it returns the function name
-'''
-def get_strategy_name(strategy):
-    return strategy.__qualname__
-
-
-'''
-Given a multidimensional python dictionary and a key, it returns the path to the key
-'''
-def search(d, k, path=None):
-    if path is None:
-        path = []
-    
-
-    if not isinstance(d, dict): # No keys found
-        return False
-    
-
-    if k in d.keys(): # Keys found
-        path.append(k)
-        return path
-    
-    else:
-        check = list(d.keys())
-        while check:
-            first = check[0]
-            path.append(first)
-
-            if search(d[first], k, path) is not False:
-                break
-            else:
-                check.pop(0)
-                path.pop(-1)
-        else:
-            return False
-        return path
-
-
 
 '''
 Return all children of a node
@@ -110,7 +70,6 @@ Assign node action to each node
 '''
 def assign_node_action(complete_tree):
     
-    
     for node in complete_tree:
         parent = node.parent
         if parent != None:
@@ -120,18 +79,83 @@ def assign_node_action(complete_tree):
             node.action = get_action_label(diff_pos)
         else:
             node.action = None
-        
+
+'''
+Given a strategy function it returns the function name
+'''
+def get_strategy_name(strategy):
+    return strategy.__qualname__
 
 
+'''
+Return position of blank tile in puzzle
+'''
 def find_blank_tile(node):
+
     return node.state.index(0)
-        
+
+
+'''
+Return action label based on position array difference
+'''    
 def get_action_label(diff_pos):
-    if diff_pos == -1:
-        return "left"
-    if diff_pos == 1:
-        return "right"
-    if diff_pos == -3:
-        return "up"
-    if diff_pos == 3:
-        return "down"
+
+    actions = {-1: "left",
+                1: "right",
+               -3: "up",
+                3: "down"}
+
+    return actions[diff_pos]
+
+'''
+Generate 8-puzzle game
+'''
+def generate_puzzle(steps):
+
+    problem = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+
+    actions = {"left": -1,
+               "right": 1,
+               "up": -3,
+               "down": 3}
+    for i in range(steps):
+        actions_allowed = []
+        start_tile = problem.index(0)
+
+        right_left = start_tile%3
+        if right_left == 0:
+            actions_allowed.append(actions["right"])
+        if right_left == 1:
+            actions_allowed.append(actions["right"])
+            actions_allowed.append(actions["left"])
+        if right_left == 2:
+            actions_allowed.append(actions["left"])
+
+        up_down = int(start_tile/3)
+        if up_down == 0:
+            actions_allowed.append(actions["down"])
+        if up_down == 1:
+            actions_allowed.append(actions["down"])
+            actions_allowed.append(actions["up"])
+        if up_down == 2:
+            actions_allowed.append(actions["up"])
+
+        if len(actions_allowed) > 0:
+            random.shuffle(actions_allowed)
+            swap_tile = start_tile+actions_allowed[0]
+            # Swap tiles
+            problem[start_tile], problem[swap_tile] = problem[swap_tile], problem[start_tile]
+            
+    return problem
+
+
+'''
+Generate random color for plot lines
+'''
+def generate_random_plot_color():
+    
+    r = random.random()
+    b = random.random()
+    g = random.random()
+    color = (r, g, b)
+    return color

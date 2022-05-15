@@ -1,6 +1,7 @@
+import time
 from node import Node
 from GUI.Graph import Graph
-from utils import get_complete_tree, assign_graph_index, assign_node_action
+from utils import get_complete_tree, assign_graph_index, assign_node_action, get_strategy_name
 
 def tree_search(problem, strategy):
     """
@@ -13,20 +14,24 @@ def tree_search(problem, strategy):
 
     fringe = [Node(problem.initial_state, path_cost=1, depth=0, graph_index=0)] # Initialize the fringe
     
-
-    new_graph_test = Graph("Total")
+    strategy_name = get_strategy_name(strategy)
+    result_graph = Graph("%s Graph Result" % strategy_name)
     # --- FINE GRAFICA ---
     
     goal_test = Node(problem.goal_test)
+    end=0
     while True:
         if len(fringe) == 0: # no solution
             return None
 
         # based on the chosen strategy this chooses the node to expand
-        current_node = strategy(fringe, problem)
         
+        start = time.time_ns()
+        current_node = strategy(fringe, problem)
+        end += time.time_ns()-start
+
         if current_node.state == goal_test.state: # Solution found
-            print("Solution found!")
+
             result = current_node.correct_path() # Solution
 
             total_tree = get_complete_tree(current_node)
@@ -38,23 +43,22 @@ def tree_search(problem, strategy):
                 parent = node.parent
                 node_index = node.graph_index
 
-
                 node_color = "black"
                 if node in result:
                     node_color="green"
                     if node.state == goal_test.state:
                         node_color="red"
 
-                new_graph_test.add_node(str(node_index), node.state, color=node_color) 
+                result_graph.add_node(str(node_index), node.state, color=node_color) 
 
                 if parent:
                     parent_index = parent.graph_index
-                    new_graph_test.add_edge(str(parent_index), str(node_index), node.action, color=node_color)
+                    result_graph.add_edge(str(parent_index), str(node_index), node.action, color=node_color)
 
-            new_graph_test.graph_viewer()
+            result_graph.graph_viewer()
 
-
-            return result
+            compute_time = end#*10**-9
+            return [result, compute_time]
         
         fringe.remove(current_node)
 
@@ -74,16 +78,12 @@ def BFS(fringe, problem):
     :param fringe: list of nodes to expand
     :return: shallowest node
     """
-
     min_depth = fringe[0]
 
     for node in fringe:
         if node.depth < min_depth.depth:
             min_depth = node
     return min_depth
-
-          
-    
 
 
 def BFS_bidirectional(fringe, problem):
@@ -137,7 +137,6 @@ def IDS(fringe, problem):
                     fringe.append(new_node)
 
         depth_limit += 1
-        # root.children = []
         fringe.append(root)
 
     return None
