@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from utils import get_strategy_name, generate_random_plot_color
 
 if __name__ == "__main__":
-    n_steps = 8
+    n_steps = 5
     initial_state = generate_puzzle(n_steps)
     goal_state = [1,2,3,4,5,6,7,8,0]
 
