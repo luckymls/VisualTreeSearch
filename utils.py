@@ -114,26 +114,17 @@ def assign_node_action(complete_tree):
     for node in complete_tree:
         parent = node.parent
         if parent != None:
-            start_blank_pos = find_blank_tile_v2(parent)
-            end_blank_pos = find_blank_tile_v2(node)
+            start_blank_pos = find_blank_tile(parent)
+            end_blank_pos = find_blank_tile(node)
             diff_pos = end_blank_pos-start_blank_pos
             node.action = get_action_label(diff_pos)
         else:
             node.action = None
         
-'''
-Remove duplicate from tree
-'''
-def remove_duplicates(complete_tree):
-    
-    pass
 
-def find_blank_tile_v2(node):
-    index=0
-    for i in node.state:
-        if i == 0:
-            return index
-        index+=1
+
+def find_blank_tile(node):
+    return node.state.index(0)
         
 def get_action_label(diff_pos):
     if diff_pos == -1:

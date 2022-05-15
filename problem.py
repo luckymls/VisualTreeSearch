@@ -1,5 +1,5 @@
 import copy
-
+from utils import find_blank_tile
 
 class Problem:
     """
@@ -23,7 +23,7 @@ class Problem:
         self.graph_iter = 0
 
     def successor_function_8_puzzle(self, node, verbose=True):
-        tile_pos = self.find_blank_tile(node)
+        tile_pos = find_blank_tile(node)
         successors = []
         path_to_root = [node.state for node in node.correct_path()]
 
@@ -66,10 +66,6 @@ class Problem:
 
         return successors
 
-    def find_blank_tile(self, node):
-        for i in range(len(node.state)):
-            if node.state[i] == 0:
-                return i
 
     def moveUp(self, node, blank_tile_position):
         new_node = copy.deepcopy(node)

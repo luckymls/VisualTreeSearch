@@ -30,7 +30,7 @@ def tree_search(problem, strategy):
             result = current_node.correct_path() # Solution
 
             total_tree = get_complete_tree(current_node)
-            #remove_duplicates(total_tree)
+            
             assign_graph_index(total_tree)
             assign_node_action(total_tree)
             for node in total_tree:
