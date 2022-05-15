@@ -6,7 +6,7 @@ from search_strategies import tree_search, BFS, IDS, BFS_bidirectional, DFS
 
 if __name__ == '__main__':
 
-    initial_state = [1, 2, 3, 4, 8, 5, 7, 0, 6]
+    initial_state = [1, 2, 3, 4, 8, 5, 7, 6, 0]
     goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 
     if is_solvable(initial_state):
@@ -28,7 +28,7 @@ if __name__ == '__main__':
             result = tree_search(problem, BFS)
         if choice == 2:
             result = tree_search(problem, BFS_bidirectional)
-        if choice == 3:
+        if choice == 3: # TODO: sostituire con A* una volta completato
             print("Da implementare.")
             result = None
             # result = tree_search(problem, DFS)
