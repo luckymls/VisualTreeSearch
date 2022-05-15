@@ -4,7 +4,7 @@ class Node:
     Class that defines the nodes of the three and its methods
     """
 
-    def __init__(self, state, parent=None, children=None, action=None, path_cost=None, depth=None, verbose=True, graph_index=None):
+    def __init__(self, state, parent=None, children=None, action=None, path_cost=None, depth=0, verbose=True, graph_index=None):
         """
         Initializes the node of the tree
         :param state: problem-dependent representation of the corresponding state
@@ -49,6 +49,10 @@ class Node:
                             path_cost=(self.path_cost + problem.step_cost),
                             depth=(self.depth+1))
 
+            for child in self.children:
+                if new_node.state == child.state:
+                    return self.children
+
             self.children.append(new_node)
         return self.children
 
@@ -59,7 +63,3 @@ def print_path(path):
         print("|")
         print("V")
         print(node.state)
-
-
-
-

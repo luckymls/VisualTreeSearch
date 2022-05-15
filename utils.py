@@ -91,7 +91,7 @@ def get_complete_tree(solution_node):
     start_node = solution_node.correct_path()[-1]
     result.append(start_node)
     result += get_children(start_node)
-    
+
     return result
 
 '''
@@ -110,4 +110,4 @@ Remove duplicate from tree
 def remove_duplicates(complete_tree):
     
     pass
-    
+

@@ -90,19 +90,20 @@ def BFS_bidirectional(fringe, problem):
         if len(fringe) == 0:
             return None
 
-        current_node1 = BFS(fringe, problem)
-        current_node2 = BFS(fringe2, problem)
-
         for node1 in fringe:
             for node2 in fringe2:
                 if node1.state == node2.state:
                     curr_node = node1
                     for parent in node2.correct_path()[1:]:
+                        parent.children = []
                         curr_node.children.append(parent)
                         parent.parent = curr_node
                         curr_node = parent
 
                     return curr_node
+
+        current_node1 = BFS(fringe, problem)
+        current_node2 = BFS(fringe2, problem)
 
         fringe.remove(current_node1)
         for new_node in current_node1.expand(problem):
@@ -119,24 +120,25 @@ def DFS(fringe, problem=None):
 
 def IDS(fringe, problem):
     root = fringe[0]
-    depth_limit = 1
-    iterator = 0
+    depth_limit = 0
 
     while depth_limit < 100:
         while len(fringe) != 0:
             current_node = DFS(fringe)
-            # fringe.remove(current_node) # test 
             if current_node.state == problem.goal_test:
-                
                 return current_node
 
-            if current_node.depth != depth_limit:
+            if current_node.depth < depth_limit-1:
                 for new_node in current_node.expand(problem):
                     fringe.append(new_node)
 
-                iterator += 1
-
-        depth_limit *= 2
+        depth_limit += 1
+        # root.children = []
         fringe.append(root)
 
     return None
+
+
+
+
+
