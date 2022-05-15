@@ -98,6 +98,7 @@ def BFS_bidirectional(fringe, problem):
                 if node1.state == node2.state:
                     curr_node = node1
                     for parent in node2.correct_path()[1:]:
+                        parent.children = []
                         curr_node.children.append(parent)
                         parent.parent = curr_node
                         curr_node = parent
