@@ -18,9 +18,9 @@ if __name__ == '__main__':
 
         problem = Problem('8tile', initial_state, goal_state, 1, step_graph) 
 
-        choice = input("Algorithm\n[0] IDS\n[1] BFS\n[2] BFS bidirectional\n[3] DFS\n> ")
+        choice = input("Algorithm\n[0] IDS\n[1] BFS\n[2] BFS bidirectional\n[3] A*\n> ")
         while choice not in ['0', '1', '2', '3']:
-            choice = input("Algorithm\n[0] IDS\n[1] BFS\n[2] BFS bidirectional\n[3] DFS\n> ")
+            choice = input("Algorithm\n[0] IDS\n[1] BFS\n[2] BFS bidirectional\n[3] A*\n> ")
         choice = int(choice)
         if choice == 0:
             result = tree_search(problem, IDS)
@@ -28,10 +28,10 @@ if __name__ == '__main__':
             result = tree_search(problem, BFS)
         if choice == 2:
             result = tree_search(problem, BFS_bidirectional)
-        if choice == 3: # TODO: sostituire con A* una volta completato
-            print("Da implementare.")
+        if choice == 3:
+            print("Algoritmo A* non implementato.")
             result = None
-            # result = tree_search(problem, DFS)
+            # result = tree_search(problem, A)
 
         if not result:
             print("No solution found")

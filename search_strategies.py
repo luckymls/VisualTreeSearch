@@ -82,15 +82,7 @@ def BFS(fringe, problem):
             min_depth = node
     return min_depth
 
-
-def BFS_bidirectional_test(fringe, problem):
-    fringe2 = [Node(problem.goal_state, path_cost=1, depth=0)]
-
-    while True:
-        if len(fringe) == 0:
-            return None
-
-            
+          
     
 
 
