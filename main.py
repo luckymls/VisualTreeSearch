@@ -5,12 +5,18 @@ import matplotlib.pyplot as plt
 from utils import get_strategy_name, generate_random_plot_color
 
 if __name__ == "__main__":
-    n_steps = 10
-    initial_state = generate_puzzle(n_steps)
-    goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
+    n_steps = 4
+    size_problem = 9
+    
 
+    goal_state = [x for x in range(size_problem)]
+    initial_state = generate_puzzle(n_steps, goal_state)
+    
+    #initial_state = [1,0,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+    print(initial_state)
+ 
     if is_solvable(initial_state):
-
+        exit(0)
         # initializing the problem:
         # in this case we have an 8 tile puzzle game with the step cost of 1
         problem = Problem('8tile', initial_state, goal_state, 1) 
@@ -26,6 +32,6 @@ if __name__ == "__main__":
         
         plt.ylabel('Compute Time (ns)')
         plt.legend(bbox_to_anchor=(1.0, 1), loc='upper center')
-        plt.show()
+        #plt.show()
     else:
         print("Not solvable problem, try with different one")

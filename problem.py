@@ -1,5 +1,6 @@
 import copy
-from utils import find_blank_tile
+
+from utils import find_blank_tile, is_action_allowed
 
 class Problem:
     """
@@ -17,10 +18,16 @@ class Problem:
         self.name = name
         self.initial_state = initial_state
         self.goal_test = goal_test
-        self.successor_function = self.successor_function_8_puzzle
+        self.successor_function = self.successor_function_puzzle
         self.step_cost = step_cost
+        self.n_row = int(len(initial_state)**0.5)
+        self.actions = {
+               "left": -1,
+               "right": 1,
+               "up": -self.n_row,
+               "down": self.n_row}
 
-    def successor_function_8_puzzle(self, node):
+    def successor_function_puzzle(self, node):
         tile_pos = find_blank_tile(node)
         successors = []
         path_to_root = [node.state for node in node.correct_path()]
@@ -42,38 +49,32 @@ class Problem:
     def moveUp(self, node, blank_tile_position):
         new_node = copy.deepcopy(node)
 
-        if blank_tile_position >= 3:
-            new_node[blank_tile_position - 3] = 0
-            new_node[blank_tile_position] = node[blank_tile_position - 3]
+        if is_action_allowed(new_node, "up")[0]:
+            swap_tile = blank_tile_position+self.actions['up']
+            new_node[blank_tile_position], new_node[swap_tile] = new_node[swap_tile], new_node[blank_tile_position]
             return new_node
 
     def moveDown(self, node, blank_tile_position):
         new_node = copy.deepcopy(node)
 
-        if blank_tile_position < 6:
-            new_node[blank_tile_position + 3] = 0
-            new_node[blank_tile_position] = node[blank_tile_position + 3]
+        if is_action_allowed(new_node, "down")[0]:
+            swap_tile = blank_tile_position+self.actions['down']
+            new_node[blank_tile_position], new_node[swap_tile] = new_node[swap_tile], new_node[blank_tile_position]
             return new_node
 
     def moveRight(self, node, blank_tile_position):
         new_node = copy.deepcopy(node)
 
-        if blank_tile_position != 2 and blank_tile_position != 5 and blank_tile_position != 8:
-            new_node[blank_tile_position + 1] = 0
-            new_node[blank_tile_position] = node[blank_tile_position + 1] 
+        if is_action_allowed(new_node, "right")[0]:
+            swap_tile = blank_tile_position+self.actions['right']
+            new_node[blank_tile_position], new_node[swap_tile] = new_node[swap_tile], new_node[blank_tile_position]
             return new_node
 
     def moveLeft(self, node, blank_tile_position):
         new_node = copy.deepcopy(node)
 
-        if blank_tile_position != 0 and blank_tile_position != 3 and blank_tile_position != 6:
-            new_node[blank_tile_position - 1] = 0 
-            new_node[blank_tile_position] = node[blank_tile_position -1]
+        if is_action_allowed(new_node, "left")[0]:
+            swap_tile = blank_tile_position+self.actions['left']
+            new_node[blank_tile_position], new_node[swap_tile] = new_node[swap_tile], new_node[blank_tile_position]
             return new_node
 
-    def print_puzzle(self, node):
-        print('- - - | - - - ')
-        print('- - - V - - - ')
-        print(node[:3])
-        print(node[3:6])
-        print(node[6:9])
