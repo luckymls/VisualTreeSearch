@@ -2,6 +2,7 @@ import copy
 
 from utils import find_blank_tile, is_action_allowed
 
+
 class Problem:
     """
     Data structure identifying the given problem
@@ -22,10 +23,10 @@ class Problem:
         self.step_cost = step_cost
         self.n_row = int(len(initial_state)**0.5)
         self.actions = {
-               "left": -1,
-               "right": 1,
-               "up": -self.n_row,
-               "down": self.n_row}
+            "left": -1,
+            "right": 1,
+            "up": -self.n_row,
+            "down": self.n_row}
 
     def successor_function_puzzle(self, node):
         tile_pos = find_blank_tile(node)
@@ -44,7 +45,6 @@ class Problem:
                     successors.append(action)
 
         return successors
-
 
     def moveUp(self, node, blank_tile_position):
         new_node = copy.deepcopy(node)
@@ -77,4 +77,3 @@ class Problem:
             swap_tile = blank_tile_position+self.actions['left']
             new_node[blank_tile_position], new_node[swap_tile] = new_node[swap_tile], new_node[blank_tile_position]
             return new_node
-

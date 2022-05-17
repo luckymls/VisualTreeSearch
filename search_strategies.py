@@ -1,8 +1,11 @@
 import time
+
 import numpy as np
-from node import Node
+
 from GUI.Graph import Graph
-from utils import get_complete_tree, assign_graph_index, assign_node_action, get_strategy_name
+from node import Node
+from utils import (assign_graph_index, assign_node_action, get_complete_tree,
+                   get_strategy_name)
 
 
 def tree_search(problem, strategy):
@@ -14,12 +17,13 @@ def tree_search(problem, strategy):
     :return: None if failure, correct path if success
     """
 
-    fringe = [Node(problem.initial_state, path_cost=1, depth=0, graph_index=0)]  # Initialize the fringe
-    
+    fringe = [Node(problem.initial_state, path_cost=1, depth=0,
+                   graph_index=0)]  # Initialize the fringe
+
     strategy_name = get_strategy_name(strategy)
     result_graph = Graph("%s Graph Result" % strategy_name)
     # --- FINE GRAFICA ---
-    
+
     goal_test = Node(problem.goal_test)
     end = 0
 
@@ -49,17 +53,19 @@ def tree_search(problem, strategy):
                     if node.state == goal_test.state:
                         node_color = "red"
 
-                result_graph.add_node(str(node_index), node.state, color=node_color) 
+                result_graph.add_node(
+                    str(node_index), node.state, color=node_color)
 
                 if parent:
                     parent_index = parent.graph_index
-                    result_graph.add_edge(str(parent_index), str(node_index), node.action, color=node_color)
+                    result_graph.add_edge(str(parent_index), str(
+                        node_index), node.action, color=node_color)
 
             result_graph.graph_viewer()
 
             compute_time = end  # *10 ** -9
             return [result, compute_time]
-        
+
         fringe.remove(current_node)
         for new_node in current_node.expand(problem):
             fringe.append(new_node)
@@ -93,6 +99,9 @@ def f(node, goal_state):
     Node evaluation function for the A* algorithm.
     It sums up the g(n) and h(n) values
     """
+    
+    node.g = g(node)
+    node.h = h(node, goal_state)
     return g(node) + h(node, goal_state)
 
 
@@ -224,8 +233,3 @@ def IDS(fringe, problem):
 
     # if the algorithm ends up here it means that no solution has been found
     return None
-
-
-
-
-
