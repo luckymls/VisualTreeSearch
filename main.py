@@ -7,7 +7,7 @@ from utils import (generate_puzzle, generate_random_plot_color,
 
 if __name__ == "__main__":
     n_steps = 5
-    size_problem = 9 # (4,9,16,25,36,49,64,...,n^2)
+    size_problem = 9  # (4,9,16,25,36,49,64,...,n^2)
 
     goal_state = [x for x in range(1, size_problem)]
     goal_state.append(0)
@@ -25,7 +25,8 @@ if __name__ == "__main__":
             strategy_name = get_strategy_name(strategy)
             print("Applying %s algorithm" % strategy_name)
             result, compute_time = tree_search(problem, strategy)
-            print("%s time: %s ns\n" % (strategy_name, compute_time))
+            print("%s time: %s ns" % (strategy_name, compute_time))
+            print("Total expanded nodes with %s algorithm: %s\n" % (strategy_name, problem.expanded_nodes))
             plt.axhline(y=compute_time, label=strategy_name,
                         color=generate_random_plot_color())
 

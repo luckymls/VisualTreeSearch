@@ -8,7 +8,7 @@ class Problem:
     Data structure identifying the given problem
     """
 
-    def __init__(self, name, initial_state, goal_test, step_cost):
+    def __init__(self, name, initial_state, goal_test, step_cost, expanded_nodes=0):
         """
         Function to initialize the problem
         :param initial_state: initial state of the problem (can be randomized)
@@ -27,6 +27,7 @@ class Problem:
             "right": 1,
             "up": -self.n_row,
             "down": self.n_row}
+        self.expanded_nodes = expanded_nodes
 
     def successor_function_puzzle(self, node):
         tile_pos = find_blank_tile(node)

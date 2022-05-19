@@ -3,7 +3,8 @@ class Node:
     Class that defines the nodes of the three and its methods
     """
 
-    def __init__(self, state, parent=None, children=None, action=None, path_cost=0, depth=0, graph_index=None, g=None, h=None):
+    def __init__(self, state, parent=None, children=None, action=None, path_cost=0, depth=0,
+                 graph_index=None, g=None, h=None):
         """
         Initializes the node of the tree
         :param state: problem-dependent representation of the corresponding state
@@ -47,6 +48,8 @@ class Node:
         the child nodes
         """
 
+        unique_node = True
+
         # check all the possible states and actions from the given node using the successor
         # function of the given problem
         for (result, action) in problem.successor_function(self):
@@ -61,7 +64,10 @@ class Node:
             # filter out all the duplicated nodes
             for child in self.children:
                 if new_node.state == child.state:
-                    return self.children
+                    unique_node = False
 
-            self.children.append(new_node)
+            if unique_node:
+                self.children.append(new_node)
+                problem.expanded_nodes += 1
+
         return self.children

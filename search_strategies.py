@@ -16,7 +16,7 @@ def tree_search(problem, strategy):
     :param strategy: search strategy to use to choose which node to expand
     :return: None if failure, correct path if success
     """
-
+    problem.expanded_nodes = 0
     fringe = [Node(problem.initial_state, path_cost=1, depth=0,
                    graph_index=0)]  # Initialize the fringe
 
@@ -208,7 +208,7 @@ def IDS(fringe, problem):
     root = fringe[0]
 
     # initializing the depth limit to 0
-    depth_limit = 0
+    depth_limit = 1
 
     while depth_limit < 100:
         while len(fringe) != 0:
@@ -223,7 +223,8 @@ def IDS(fringe, problem):
             # check the depth of the node and the limit: if the limit is reached the node doesn't get expanded
             if current_node.depth < depth_limit-1:
                 for new_node in current_node.expand(problem):
-                    fringe.append(new_node)
+                    if new_node is not None:
+                        fringe.append(new_node)
 
         # increasing the depth limit
         depth_limit += 1
