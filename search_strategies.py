@@ -22,7 +22,7 @@ def tree_search(problem, strategy):
 
     strategy_name = get_strategy_name(strategy)
     result_graph = Graph("%s Graph Result" % strategy_name)
-    # --- FINE GRAFICA ---
+    
 
     goal_test = Node(problem.goal_test)
     end = 0
@@ -31,9 +31,9 @@ def tree_search(problem, strategy):
         if len(fringe) == 0:  # no solution
             return None
 
-        start = time.time_ns()
+        start = time.time()
         current_node = strategy(fringe, problem)
-        end += time.time_ns()-start
+        end += time.time()-start
 
         # based on the chosen strategy this chooses the node to expand
         if current_node.state == goal_test.state:  # Solution found
@@ -51,7 +51,7 @@ def tree_search(problem, strategy):
                 if node in result:
                     node_color = "green"
                     if node.state == goal_test.state:
-                        node_color = "red"
+                        node_color = "blue"
 
                 result_graph.add_node(
                     str(node_index), node.state, color=node_color)
@@ -63,12 +63,14 @@ def tree_search(problem, strategy):
 
             result_graph.graph_viewer()
 
-            compute_time = end  # *10 ** -9
+            compute_time = end*10**3 # ms  # *10 ** -9
             return [result, compute_time]
 
+        start = time.time()
         fringe.remove(current_node)
         for new_node in current_node.expand(problem):
             fringe.append(new_node)
+        end += time.time()-start
 
 
 def A_star(fringe, problem):

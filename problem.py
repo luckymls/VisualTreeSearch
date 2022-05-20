@@ -8,7 +8,7 @@ class Problem:
     Data structure identifying the given problem
     """
 
-    def __init__(self, name, initial_state, goal_test, step_cost, expanded_nodes=0):
+    def __init__(self, initial_state, goal_test, step_cost, expanded_nodes=0):
         """
         Function to initialize the problem
         :param initial_state: initial state of the problem (can be randomized)
@@ -16,7 +16,7 @@ class Problem:
         :param successor_function: function that decides which node to expand next
         :param step_cost: cost of the action from a node to another
         """
-        self.name = name
+        
         self.initial_state = initial_state
         self.goal_test = goal_test
         self.successor_function = self.successor_function_puzzle
@@ -42,9 +42,9 @@ class Problem:
         actions = [up, down, left, right]
         for action in actions:
             if action[0] != None:
-                if node.parent != None or action[0] not in path_to_root:
+                if node.parent == None or action[0] not in path_to_root:
                     successors.append(action)
-
+                
         return successors
 
     def moveUp(self, node, blank_tile_position):
