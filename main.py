@@ -24,7 +24,6 @@ if __name__ == "__main__":
         fig, ax = plt.subplots(num='Compute time')
 
         for strategy in algorithms:
-            
             strategy_name = get_strategy_name(strategy)
             print("\n%s algorithm" % strategy_name)
             result, compute_time = tree_search(problem, strategy)

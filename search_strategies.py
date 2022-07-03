@@ -4,8 +4,7 @@ import numpy as np
 
 from GUI.Graph import Graph
 from node import Node
-from utils import (assign_graph_index, assign_node_action, get_complete_tree,
-                   get_strategy_name)
+from utils import (assign_graph_index, assign_node_action, get_complete_tree, get_strategy_name)
 
 
 def tree_search(problem, strategy):
