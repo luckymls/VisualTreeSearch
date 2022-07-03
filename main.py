@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 
 from problem import Problem
-from search_strategies import BFS, IDS, A_star, BFS_bidirectional, tree_search
+from search_strategies import BFS, IDS, A_star, Optimized_A_star, BFS_bidirectional, tree_search
 from utils import (generate_puzzle, generate_random_plot_color,
                    get_strategy_name, is_solvable)
 
 
 if __name__ == "__main__":
-    n_steps = 4
+    n_steps = 10
     size_problem = 9  # (4,9,16,25,36,49,64,...,n^2)
 
     goal_state = [x for x in range(1, size_problem)]
@@ -20,9 +20,8 @@ if __name__ == "__main__":
         # puzzle game with the step cost of 1
         problem = Problem(initial_state, goal_state, 1)
 
-        algorithms = [IDS, BFS, BFS_bidirectional, A_star]
+        algorithms = [IDS, BFS, BFS_bidirectional, A_star, Optimized_A_star]
         fig, ax = plt.subplots(num='Compute time')
-
 
         for strategy in algorithms:
             
@@ -32,7 +31,6 @@ if __name__ == "__main__":
             
             print("- Time: %s ms" % compute_time)
             print("- Expanded nodes: %s" % problem.expanded_nodes)
-            
 
             ax.bar(problem.expanded_nodes, compute_time, label=strategy_name, width=1, color=generate_random_plot_color(), linewidth=0.7)
 

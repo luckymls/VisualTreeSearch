@@ -22,7 +22,6 @@ def tree_search(problem, strategy):
 
     strategy_name = get_strategy_name(strategy)
     result_graph = Graph("%s Graph Result" % strategy_name)
-    
 
     goal_test = Node(problem.goal_test)
     end = 0
@@ -73,6 +72,67 @@ def tree_search(problem, strategy):
         end += time.time()-start
 
 
+def Optimized_A_star(fringe, problem):
+    """
+    Strategy that uses the evaluation function to choose the node to expand.
+    The evaluation function returns the sum of the path cost from the root to the current node and the
+    estimation of the path cost from the current node to the solution node.
+    The node chosen base on minimum value of the evaluation function: the node in the fringe with the min
+    evaluation function value is chosen to be expanded.
+    """
+    y_coord = -1
+    tiles_coordinates = {}
+    node_to_expand = fringe[0]
+
+    for i in range(len(problem.goal_test)):
+        if i % problem.n_row == 0:
+            y_coord += 1
+        tiles_coordinates[problem.goal_test[i]] = (i % problem.n_row, y_coord)
+
+    min_path_cost = optimized_f(node_to_expand, tiles_coordinates)
+
+    # check for each node in the fringe which one has the minimum f-value
+    for node in fringe:
+        curr_node_path_cost = optimized_f(node, tiles_coordinates)
+        if curr_node_path_cost < min_path_cost:
+            min_path_cost = curr_node_path_cost
+            node_to_expand = node
+
+    # return the node with the min f-value
+    return node_to_expand
+
+
+def optimized_f(node, tiles_coordinates):
+    """
+        Node evaluation function for the A* algorithm.
+        It sums up the g(n) and h(n) values. The heuristic used in this case is the Manhattan distance
+        """
+
+    node.g = g(node)
+    node.h = manhattan_distance(node, tiles_coordinates)
+
+    return node.g + node.h
+
+
+def manhattan_distance(node, goal_tiles_coordinates):
+    sum_mhd = 0
+    dim_problem = int(len(node.state)**0.5)
+    y_coord = -1
+    curr_node_tiles_coordinates = {}
+
+    for i in range(len(node.state)):
+        if i % dim_problem == 0:
+            y_coord += 1
+
+        curr_node_tiles_coordinates[node.state[i]] = (i % dim_problem, y_coord)
+
+    for tile in node.state:
+        sum_mhd += abs(curr_node_tiles_coordinates.get(tile)[0] - goal_tiles_coordinates.get(tile)[0]) + \
+               abs(curr_node_tiles_coordinates.get(tile)[1] - goal_tiles_coordinates.get(tile)[1])
+
+    return sum_mhd
+
+
 def A_star(fringe, problem):
     """
     Strategy that uses the evaluation function to choose the node to expand.
@@ -104,7 +164,7 @@ def f(node, goal_state):
     
     node.g = g(node)
     node.h = h(node, goal_state)
-    return g(node) + h(node, goal_state)
+    return node.g + node.h
 
 
 def g(node):
