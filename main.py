@@ -5,7 +5,6 @@ from search_strategies import BFS, IDS, A_star, Optimized_A_star, BFS_bidirectio
 from utils import (generate_puzzle, generate_random_plot_color,
                    get_strategy_name, is_solvable)
 
-
 if __name__ == "__main__":
     n_steps = 10
     size_problem = 9  # (4,9,16,25,36,49,64,...,n^2)
