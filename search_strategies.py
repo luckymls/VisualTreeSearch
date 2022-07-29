@@ -7,7 +7,7 @@ from node import Node
 from utils import (assign_graph_index, assign_node_action, get_complete_tree, get_strategy_name)
 
 
-def tree_search(problem, strategy):
+def tree_search(problem, strategy, no_diagram=False):
     """
     Function that uses the passed strategy to choose which node to expand
     and expands it
@@ -20,7 +20,9 @@ def tree_search(problem, strategy):
                    graph_index=0)]  # Initialize the fringe
 
     strategy_name = get_strategy_name(strategy)
-    result_graph = Graph("%s Graph Result" % strategy_name)
+
+    if no_diagram == False:
+        result_graph = Graph("%s Graph Result" % strategy_name)
 
     goal_test = Node(problem.goal_test)
     end = 0
@@ -51,15 +53,18 @@ def tree_search(problem, strategy):
                     if node.state == goal_test.state:
                         node_color = "blue"
 
-                result_graph.add_node(
+                if no_diagram == False:
+                    result_graph.add_node(
                     str(node_index), node.state, color=node_color)
 
                 if parent:
                     parent_index = parent.graph_index
-                    result_graph.add_edge(str(parent_index), str(
+                    if no_diagram == False:
+                        result_graph.add_edge(str(parent_index), str(
                         node_index), node.action, color=node_color)
 
-            result_graph.graph_viewer()
+            if no_diagram == False:
+                result_graph.graph_viewer()
 
             compute_time = end*10**3 # ms  # *10 ** -9
             return [result, compute_time]
