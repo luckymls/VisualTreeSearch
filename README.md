@@ -1,5 +1,20 @@
-# progettoAI
-Progetto bellissimo dove andremo a fare un progetto fighissimo di intelligenza artificiale
+# n-Tiles Puzzle Solver
+
+## Overview
+
+This project is a puzzle-solving framework that utilizes various search algorithms to solve a sliding puzzle problem. The framework includes several popular search strategies, such as Breadth-First Search (BFS), Iterative Deepening Search (IDS), A* search, Optimized A* search, and Bidirectional BFS. It can also visualize the performance of each algorithm by plotting the number of expanded nodes versus the compute time, allowing users to analyze each algorithm's efficiency.
+
+## Prerequisites
+
+- **Python 3.6+**
+- **Required libraries**:
+  - `matplotlib`: For plotting compute time and expanded nodes for each algorithm.
+  - `numpy`: For numerical operations.
+
+Install the dependencies using:
+```bash
+pip install matplotlib numpy
+```
 
 
 ![image](https://user-images.githubusercontent.com/58305440/161789711-2f4fdb9b-e956-4942-ad98-7870f85506c3.png)
